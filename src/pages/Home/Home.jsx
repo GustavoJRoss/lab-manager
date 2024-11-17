@@ -1,21 +1,37 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import Header from "../../components/Header/Header";
+import Card from "../../components/Card/Card";
+import "./Home.css";
 
 const Home = () => {
-  const { logout } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <div>
       <Header />
-      <h1>Home</h1>
-      <button onClick={logout}>Sair</button>
-      <Link to="/schedule">
-        <button>Agendamentos</button>
-      </Link>
-      <Link to="/laboratories">
-        <button>Laboratórios</button>
-      </Link>
+      <div className="homeCards">
+        <Card
+          title={"Agenda"}
+          imagePath={"/src/assets/react.svg"}
+          description={
+            "Este é o lugar que você poderá agendar o laborátorio no melhor horário pra você."
+          }
+          onClick={() => {
+            navigate("/schedule");
+          }}
+        />
+        <Card
+          title={"Laboratórios"}
+          imagePath={"/src/assets/react.svg"}
+          description={
+            "Este é o lugar que você poderá ver os laboratórios disponiveis para você."
+          }
+          onClick={() => {
+            navigate("/laboratories");
+          }}
+        />
+      </div>
     </div>
   );
 };
