@@ -1,0 +1,90 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  text-align: center;
+  border: 2px solid #007bff;
+}
+
+.modalContent h2 {
+  margin-top: 0;
+  color: #007bff;
+}
+
+.modalContent p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.softwaresSection {
+  margin-top: 15px;
+}
+
+.softwaresSection button.toggleButton {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.softwaresSection button.toggleButton:hover {
+  background: #0056b3;
+}
+
+.softwaresList {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.softwaresList li {
+  background: #e9ecef;
+  margin: 5px 0;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+button.addButton {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 7px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button.addButton:hover {
+  background: #218838;
+}
+
+button.closeButton {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 7px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+button.closeButton:hover {
+  background: #c82333;
+}
