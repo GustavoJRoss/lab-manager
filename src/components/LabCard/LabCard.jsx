@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import './LabCard.css';
+import React, { useState } from "react";
+import "./LabCard.css";
 
 const LabCard = ({ laboratorio, onClose }) => {
   const [expandirSoftwares, setExpandirSoftwares] = useState(false);
@@ -30,7 +30,7 @@ const LabCard = ({ laboratorio, onClose }) => {
             className="toggleButton"
             onClick={() => setExpandirSoftwares(!expandirSoftwares)}
           >
-            {expandirSoftwares ? 'Recolher' : 'Expandir'}
+            {expandirSoftwares ? "Recolher" : "Expandir"}
           </button>
           {expandirSoftwares && (
             <ul className="softwaresList">

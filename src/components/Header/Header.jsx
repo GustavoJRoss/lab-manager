@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Header.css";
 import { useAuth } from "../../context/AuthContext";
 
@@ -6,6 +7,7 @@ const Header = () => {
   const { isAuthenticated, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const navigate = useNavigate();
   // Alternar a visibilidade do menu
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
@@ -17,7 +19,11 @@ const Header = () => {
         <header>
           <div className="headerContainer">
             <div className="headerLogo">
-              <img src="/src/assets/logo.png" alt="logoLivro" />
+              <img
+                src="/src/assets/logo.png"
+                alt="logoLivro"
+                onClick={() => alert("rerer")}
+              />
             </div>
             <ul className="links">
               <li>
