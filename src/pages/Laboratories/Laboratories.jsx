@@ -2,37 +2,43 @@ import React, { useState } from 'react';
 import Header from '../../components/Header/Header';
 import LabCard from '../../components/LabCard/LabCard'; // Importando o componente
 import './Laboratories.css';
+import Button from '../../components/Button/Button';
+import CreateLab from '../../components/CreateLab/CreateLab';
 
 const Laboratorios = () => {
   // Dados fictícios
   const laboratorios = [
     {
-      nome: 'Lab 1',
-      bloco: 'A',
-      status: 'Disponível',
-      numPcs: 20,
-      softwares: ['Python', 'Visual Studio Code', 'MATLAB'],
+      Name: 'Lab 1',
+      Local: 'A',
+      Acessible: true,
+      PcNumbers: 20,
+      Status: 'disponivel',
+      Softwares: ['Python', 'Visual Studio Code', 'MATLAB'],
     },
     {
-      nome: 'Lab 2',
-      bloco: 'B',
-      status: 'Ocupado',
-      numPcs: 15,
-      softwares: ['Eclipse', 'IntelliJ', 'NetBeans'],
+      Name: 'Lab 2',
+      Local: 'A',
+      Acessible: true,
+      PcNumbers: 20,
+      Status: 'disponivel',
+      Softwares: ['Python', 'Visual Studio Code', 'MATLAB'],
     },
     {
-      nome: 'Lab 3',
-      bloco: 'A',
-      status: 'Manutenção',
-      numPcs: 10,
-      softwares: ['AutoCAD', 'SketchUp', 'Blender'],
+      Name: 'Lab 3',
+      Local: 'A',
+      Acessible: true,
+      PcNumbers: 20,
+      Status: 'disponivel',
+      Softwares: ['Python', 'Visual Studio Code', 'MATLAB'],
     },
     {
-      nome: 'Lab 4',
-      bloco: 'C',
-      status: 'Disponível',
-      numPcs: 25,
-      softwares: ['Unity', 'Unreal Engine', 'Photoshop'],
+      Name: 'Lab 3',
+      Local: 'A',
+      Acessible: true,
+      PcNumbers: 20,
+      Status: 'disponivel',
+      Softwares: ['Python', 'Visual Studio Code', 'MATLAB'],
     },
   ];
 
@@ -43,13 +49,14 @@ const Laboratorios = () => {
 
   // Estado para controle do modal
   const [laboratorioSelecionado, setLaboratorioSelecionado] = useState(null);
+  const [createLab, setCreateLab] = useState(false);
 
   // Filtrar os dados com base nos filtros
   const laboratoriosFiltrados = laboratorios.filter((lab) => {
     return (
-      (filtroBloco === '' || lab.bloco === filtroBloco) &&
-      (filtroStatus === '' || lab.status === filtroStatus) &&
-      (filtroNumPcs === '' || lab.numPcs >= parseInt(filtroNumPcs))
+      (filtroBloco === '' || lab.Local === filtroBloco) &&
+      (filtroStatus === '' || lab.Status === filtroStatus) &&
+      (filtroNumPcs === '' || lab.PcNumbers >= parseInt(filtroNumPcs))
     );
   });
 
@@ -58,44 +65,60 @@ const Laboratorios = () => {
       <Header />
       <div className="laboratoriosContainer">
         {/* Filtro */}
-        <div className="filtroContainer">
-          <div className="filtroItem">
-            <label>Bloco:</label>
-            <select
-              value={filtroBloco}
-              onChange={(e) => setFiltroBloco(e.target.value)}
-            >
-              <option value="">Todos</option>
-              <option value="A">A</option>
-              <option value="B">B</option>
-              <option value="C">C</option>
-            </select>
+        <div
+          className="manageInfoContainer"
+          style={{
+            display: 'flex',
+            backgroundColor: 'white',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '10px 50px',
+            borderRadius: '10px',
+          }}
+        >
+          <div className="filtroContainer">
+            <div className="filtroItem">
+              <label>Bloco:</label>
+              <select
+                value={filtroBloco}
+                onChange={(e) => setFiltroBloco(e.target.value)}
+              >
+                <option value="">Todos</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+              </select>
+            </div>
+            <div className="filtroItem">
+              <label>Status:</label>
+              <select
+                value={filtroStatus}
+                onChange={(e) => setFiltroStatus(e.target.value)}
+              >
+                <option value="">Todos</option>
+                <option value="disponivel">Disponível</option>
+                <option value="Ocupado">Ocupado</option>
+                <option value="Manutenção">Manutenção</option>
+              </select>
+            </div>
+            <div className="filtroItem">
+              <label>Num. PCs:</label>
+              <input
+                type="number"
+                min="0"
+                value={filtroNumPcs}
+                onChange={(e) => setFiltroNumPcs(e.target.value)}
+                placeholder="Mínimo"
+              />
+            </div>
           </div>
-          <div className="filtroItem">
-            <label>Status:</label>
-            <select
-              value={filtroStatus}
-              onChange={(e) => setFiltroStatus(e.target.value)}
-            >
-              <option value="">Todos</option>
-              <option value="Disponível">Disponível</option>
-              <option value="Ocupado">Ocupado</option>
-              <option value="Manutenção">Manutenção</option>
-            </select>
-          </div>
-          <div className="filtroItem">
-            <label>Num. PCs:</label>
-            <input
-              type="number"
-              min="0"
-              value={filtroNumPcs}
-              onChange={(e) => setFiltroNumPcs(e.target.value)}
-              placeholder="Mínimo"
-            />
-          </div>
+          <Button
+            text={'Criar Laboratório'}
+            onClick={() => setCreateLab(true)}
+            color={'#357ae8'}
+          />
         </div>
-
-        {/* Tabela */}
         <div className="tabelaContainer">
           <table>
             <thead>
@@ -104,27 +127,28 @@ const Laboratorios = () => {
                 <th>Bloco</th>
                 <th>Status</th>
                 <th>Numero de PCs</th>
+                <th>Acessível</th>
               </tr>
             </thead>
             <tbody>
               {laboratoriosFiltrados.map((lab, index) => (
                 <tr key={index} onClick={() => setLaboratorioSelecionado(lab)}>
-                  <td>{lab.nome}</td>
-                  <td>{lab.bloco}</td>
-                  <td>{lab.status}</td>
-                  <td>{lab.numPcs}</td>
+                  <td>{lab.Name}</td>
+                  <td>{lab.Local}</td>
+                  <td>{lab.Status}</td>
+                  <td>{lab.PcNumbers}</td>
+                  <td>{lab.Acessible ? 'Sim' : 'Não'}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </div>
-
-      {/* Utilizando o componente LabCard */}
       <LabCard
         laboratorio={laboratorioSelecionado}
         onClose={() => setLaboratorioSelecionado(null)} // Fechar modal
       />
+      {createLab && <CreateLab onClose={() => setCreateLab(false)} />}
     </>
   );
 };

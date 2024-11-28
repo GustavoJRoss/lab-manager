@@ -1,0 +1,19 @@
+.button {
+  height: 50px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  padding: 0px 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+.button:active {
+  transform: scale(0.98);
+}

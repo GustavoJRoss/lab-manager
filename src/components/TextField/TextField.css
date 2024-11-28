@@ -1,0 +1,30 @@
+.textFieldContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.textFieldLabel {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+.textFieldInput {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.textFieldInput:focus {
+  border-color: #3399ff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(51, 153, 255, 0.5);
+}
+
+.textFieldInput::placeholder {
+  color: #aaa;
+}
