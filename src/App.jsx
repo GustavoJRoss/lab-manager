@@ -5,6 +5,7 @@ import Home from "./pages/Home/Home";
 import Schedule from "./pages/Schedule/Schedule";
 import Laboratories from "./pages/Laboratories/Laboratories";
 import ProtectedRoute from "./services/ProtectedRoute";
+import Register from "./pages/Register/Register";
 
 const App = () => {
   return (
@@ -12,6 +13,8 @@ const App = () => {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+
           <Route
             path="/home"
             element={

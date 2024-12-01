@@ -1,0 +1,74 @@
+/* Register.css */
+.RegisterPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 25vh auto;
+}
+
+form h1 {
+  text-align: center;
+  color: white;
+  margin-bottom: 30px;
+}
+
+form {
+  background-color: #3498db;
+  padding: 20px 30px;
+  border-radius: 16px 4px 16px 4px;
+}
+
+.labelInput {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.labelInput label {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.labelInput input {
+  border-radius: 10px;
+  border: none;
+  padding: 10px;
+}
+
+.formInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.RegisterButton {
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #2980b9;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.RegisterButton:hover {
+  background-color: #21618c;
+}
+
+.RegisterFooter {
+  margin-top: 15px;
+  font-size: 14px;
+  color: white;
+}
+
+.RegisterFooter a {
+  color: #eaf2f8;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.RegisterFooter a:hover {
+  color: #ffffff;
+}

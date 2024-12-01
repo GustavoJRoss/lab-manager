@@ -27,13 +27,22 @@ const Header = () => {
             </div>
             <ul className="links">
               <li>
-                <a href="#">Sobre</a>
+                <a
+                  onClick={() => {
+                    navigate("/");
+                  }}
+                >
+                  Login
+                </a>
               </li>
               <li>
-                <a href="#">Login</a>
-              </li>
-              <li>
-                <a href="#">Register</a>
+                <a
+                  onClick={() => {
+                    navigate("/register");
+                  }}
+                >
+                  Register
+                </a>
               </li>
             </ul>
           </div>

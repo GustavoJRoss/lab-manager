@@ -2,38 +2,38 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import Header from "../../components/Header/Header";
-import "./Login.css";
+import "./Register.css";
 
-const Login = () => {
+const Register = () => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  const { login } = useAuth();
   const navigate = useNavigate();
 
+  const handleCreateUser = async () => {};
   return (
     <div>
       <Header />
-      <div className="loginPage">
-        <div className="loginBox">
+      <div className="RegisterPage">
+        <div className="RegisterBox">
           <form>
-            <h1>Login</h1>
+            <h1>Register</h1>
             <div className="formInfo">
               <div className="labelInput">
-                <label htmlFor="Usuário">Usuário</label>
+                <label htmlFor="Usuário">Coloque um nome de Usuário:</label>
                 <input
                   type="text"
                   placeholder="Usuário"
-                  className="loginInput"
+                  className="RegisterInput"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
               <div className="labelInput">
-                <label htmlFor="Senha">Senha</label>
+                <label htmlFor="Senha">Insira uma senha:</label>
                 <input
                   type="password"
                   placeholder="Senha"
-                  className="loginInput"
+                  className="RegisterInput"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -41,16 +41,16 @@ const Login = () => {
             </div>
             <button
               type="button"
-              className="loginButton"
-              onClick={() => login(username, password)}
+              className="RegisterButton"
+              onClick={() => handleCreateUser()}
             >
-              Login
+              Register
             </button>
-            <p className="loginFooter">
-              Ainda não possui uma conta?{" "}
+            <p className="RegisterFooter">
+              Já possui uma conta?{" "}
               <a
                 onClick={() => {
-                  navigate("/register");
+                  navigate("/");
                 }}
               >
                 Clique aqui.
@@ -63,4 +63,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
