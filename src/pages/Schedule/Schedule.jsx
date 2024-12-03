@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Schedule.css";
+import axios from "axios";
 import Header from "../../components/Header/Header";
 
 const Schedule = () => {
@@ -8,9 +9,47 @@ const Schedule = () => {
   const [horaInicio, setHoraInicio] = useState("");
   const [horaFim, setHoraFim] = useState("");
   const [mostrarModal, setMostrarModal] = useState(false);
+  const [userID, setUserID] = useState("");
+  const [periodo, setPeriodo] = useState("manha");
+  const [diasSelecionados, setDiasSelecionados] = useState([]);
+
+  const criarAgendamento = async ({
+    labID,
+    userID,
+    startTime,
+    endTime,
+    period,
+    daysOfWeek,
+  }) => {
+    try {
+      // Convertendo os IDs e datas para o formato esperado
+      const payload = {
+        lab_id: labID, // Assuma que já é um ObjectID no formato correto
+        user_id: userID, // Assuma que já é um ObjectID no formato correto
+        start_time: new Date(startTime).toISOString(),
+        end_time: new Date(endTime).toISOString(),
+        period: period || null,
+        days_of_week: daysOfWeek.length ? daysOfWeek : null,
+      };
+
+      // Fazendo a requisição POST para a rota
+      const response = await axios.post("/bookings/create", payload);
+
+      // Retornando sucesso ou mensagem do servidor
+      console.log("Agendamento criado com sucesso:", response.data);
+      alert("Agendamento criado com sucesso!");
+    } catch (error) {
+      console.error(
+        "Erro ao criar agendamento:",
+        error.response?.data || error
+      );
+      alert("Erro ao criar agendamento. Verifique os dados e tente novamente.");
+    }
+  };
 
   const laboratorios = [
     {
+      id: 1,
       nome: "Lab 1",
       bloco: "A",
       status: "Disponível",
@@ -18,6 +57,7 @@ const Schedule = () => {
       softwares: ["Python", "Visual Studio Code", "MATLAB"],
     },
     {
+      id: 2,
       nome: "Lab 2",
       bloco: "B",
       status: "Ocupado",
@@ -25,6 +65,7 @@ const Schedule = () => {
       softwares: ["Eclipse", "IntelliJ", "NetBeans"],
     },
     {
+      id: 3,
       nome: "Lab 3",
       bloco: "A",
       status: "Manutenção",
@@ -32,6 +73,7 @@ const Schedule = () => {
       softwares: ["AutoCAD", "SketchUp", "Blender"],
     },
     {
+      id: 4,
       nome: "Lab 4",
       bloco: "C",
       status: "Disponível",
@@ -52,19 +94,34 @@ const Schedule = () => {
     setDataAgendamento("");
     setHoraInicio("");
     setHoraFim("");
+    setUserID("");
+    setPeriodo("manha");
+    setDiasSelecionados([]);
     setMostrarModal(false);
   };
 
   // Função para confirmar o agendamento
-  const confirmarAgendamento = () => {
-    if (!dataAgendamento || !horaInicio || !horaFim) {
+  const confirmarAgendamento = async () => {
+    if (!dataAgendamento || !horaInicio || !horaFim || !userID) {
       alert("Preencha todos os campos!");
       return;
     }
-    alert(
-      `Laboratório ${laboratorioSelecionado.nome} agendado com sucesso para ${dataAgendamento}, das ${horaInicio} às ${horaFim}!`
-    );
-    fecharModal();
+
+    const agendamento = {
+      labID: laboratorioSelecionado.id, // Substitua por ID correto do laboratório
+      userID,
+      startTime: `${dataAgendamento}T${horaInicio}`,
+      endTime: `${dataAgendamento}T${horaFim}`,
+      period: periodo,
+      daysOfWeek: diasSelecionados,
+    };
+
+    try {
+      await criarAgendamento(agendamento);
+      fecharModal(); // Fechar modal após sucesso
+    } catch (error) {
+      console.error("Erro ao criar agendamento:", error);
+    }
   };
 
   return (
@@ -112,6 +169,15 @@ const Schedule = () => {
                 <strong>Laboratório:</strong> {laboratorioSelecionado.nome}
               </p>
               <label>
+                Usuário:
+                <input
+                  type="text"
+                  placeholder="ID do Usuário"
+                  value={userID}
+                  onChange={(e) => setUserID(e.target.value)}
+                />
+              </label>
+              <label>
                 Data:
                 <input
                   type="date"
@@ -134,6 +200,44 @@ const Schedule = () => {
                   value={horaFim}
                   onChange={(e) => setHoraFim(e.target.value)}
                 />
+              </label>
+              <label>
+                Período:
+                <select
+                  value={periodo}
+                  onChange={(e) => setPeriodo(e.target.value)}
+                >
+                  <option value="manha">Manhã</option>
+                  <option value="tarde">Tarde</option>
+                  <option value="noite">Noite</option>
+                </select>
+              </label>
+              <label>
+                Dias da Semana:
+                <div className="diasSemana">
+                  {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"].map(
+                    (dia, index) => (
+                      <label key={index}>
+                        <input
+                          type="checkbox"
+                          value={index}
+                          checked={diasSelecionados.includes(index)}
+                          onChange={(e) => {
+                            const value = Number(e.target.value);
+                            if (diasSelecionados.includes(value)) {
+                              setDiasSelecionados(
+                                diasSelecionados.filter((d) => d !== value)
+                              );
+                            } else {
+                              setDiasSelecionados([...diasSelecionados, value]);
+                            }
+                          }}
+                        />
+                        {dia}
+                      </label>
+                    )
+                  )}
+                </div>
               </label>
               <div className="modalButtons">
                 <button
