@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import "./Schedule.css";
-import axios from "axios";
-import Header from "../../components/Header/Header";
+import React, { useState } from 'react';
+import './Schedule.css';
+import axios from 'axios';
+import Header from '../../components/Header/Header';
 
 const Schedule = () => {
   const [laboratorioSelecionado, setLaboratorioSelecionado] = useState(null);
-  const [dataAgendamento, setDataAgendamento] = useState("");
-  const [horaInicio, setHoraInicio] = useState("");
-  const [horaFim, setHoraFim] = useState("");
+  const [dataAgendamento, setDataAgendamento] = useState('');
+  const [horaInicio, setHoraInicio] = useState('');
+  const [horaFim, setHoraFim] = useState('');
   const [mostrarModal, setMostrarModal] = useState(false);
-  const [userID, setUserID] = useState("");
-  const [periodo, setPeriodo] = useState("manha");
+  const [userID, setUserID] = useState('');
+  const [periodo, setPeriodo] = useState('manha');
   const [diasSelecionados, setDiasSelecionados] = useState([]);
 
   const criarAgendamento = async ({
@@ -33,52 +33,52 @@ const Schedule = () => {
       };
 
       // Fazendo a requisição POST para a rota
-      const response = await axios.post("/bookings/create", payload);
+      const response = await axios.post('/bookings/create', payload);
 
       // Retornando sucesso ou mensagem do servidor
-      console.log("Agendamento criado com sucesso:", response.data);
-      alert("Agendamento criado com sucesso!");
+      console.log('Agendamento criado com sucesso:', response.data);
+      alert('Agendamento criado com sucesso!');
     } catch (error) {
       console.error(
-        "Erro ao criar agendamento:",
-        error.response?.data || error
+        'Erro ao criar agendamento:',
+        error.response?.data || error,
       );
-      alert("Erro ao criar agendamento. Verifique os dados e tente novamente.");
+      alert('Erro ao criar agendamento. Verifique os dados e tente novamente.');
     }
   };
 
   const laboratorios = [
     {
       id: 1,
-      nome: "Lab 1",
-      bloco: "A",
-      status: "Disponível",
+      nome: 'Lab 1',
+      bloco: 'A',
+      status: 'Disponível',
       numPcs: 20,
-      softwares: ["Python", "Visual Studio Code", "MATLAB"],
+      softwares: ['Python', 'Visual Studio Code', 'MATLAB'],
     },
     {
       id: 2,
-      nome: "Lab 2",
-      bloco: "B",
-      status: "Ocupado",
+      nome: 'Lab 2',
+      bloco: 'B',
+      status: 'Ocupado',
       numPcs: 15,
-      softwares: ["Eclipse", "IntelliJ", "NetBeans"],
+      softwares: ['Eclipse', 'IntelliJ', 'NetBeans'],
     },
     {
       id: 3,
-      nome: "Lab 3",
-      bloco: "A",
-      status: "Manutenção",
+      nome: 'Lab 3',
+      bloco: 'A',
+      status: 'Manutenção',
       numPcs: 10,
-      softwares: ["AutoCAD", "SketchUp", "Blender"],
+      softwares: ['AutoCAD', 'SketchUp', 'Blender'],
     },
     {
       id: 4,
-      nome: "Lab 4",
-      bloco: "C",
-      status: "Disponível",
+      nome: 'Lab 4',
+      bloco: 'C',
+      status: 'Disponível',
       numPcs: 25,
-      softwares: ["Unity", "Unreal Engine", "Photoshop"],
+      softwares: ['Unity', 'Unreal Engine', 'Photoshop'],
     },
   ];
 
@@ -91,11 +91,11 @@ const Schedule = () => {
   // Função para fechar o modal
   const fecharModal = () => {
     setLaboratorioSelecionado(null);
-    setDataAgendamento("");
-    setHoraInicio("");
-    setHoraFim("");
-    setUserID("");
-    setPeriodo("manha");
+    setDataAgendamento('');
+    setHoraInicio('');
+    setHoraFim('');
+    setUserID('');
+    setPeriodo('manha');
     setDiasSelecionados([]);
     setMostrarModal(false);
   };
@@ -103,7 +103,7 @@ const Schedule = () => {
   // Função para confirmar o agendamento
   const confirmarAgendamento = async () => {
     if (!dataAgendamento || !horaInicio || !horaFim || !userID) {
-      alert("Preencha todos os campos!");
+      alert('Preencha todos os campos!');
       return;
     }
 
@@ -120,7 +120,7 @@ const Schedule = () => {
       await criarAgendamento(agendamento);
       fecharModal(); // Fechar modal após sucesso
     } catch (error) {
-      console.error("Erro ao criar agendamento:", error);
+      console.error('Erro ao criar agendamento:', error);
     }
   };
 
@@ -150,7 +150,7 @@ const Schedule = () => {
                   <button
                     className="agendarButton"
                     onClick={() => abrirAgendamento(lab)}
-                    disabled={lab.status !== "Disponível"}
+                    disabled={lab.status !== 'Disponível'}
                   >
                     Agendar
                   </button>
@@ -214,8 +214,16 @@ const Schedule = () => {
               </label>
               <label>
                 Dias da Semana:
-                <div className="diasSemana">
-                  {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"].map(
+                <div
+                  className="diasSemana"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                    justifyContent: 'space-around',
+                  }}
+                >
+                  {['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'].map(
                     (dia, index) => (
                       <label key={index}>
                         <input
@@ -226,7 +234,7 @@ const Schedule = () => {
                             const value = Number(e.target.value);
                             if (diasSelecionados.includes(value)) {
                               setDiasSelecionados(
-                                diasSelecionados.filter((d) => d !== value)
+                                diasSelecionados.filter((d) => d !== value),
                               );
                             } else {
                               setDiasSelecionados([...diasSelecionados, value]);
@@ -235,7 +243,7 @@ const Schedule = () => {
                         />
                         {dia}
                       </label>
-                    )
+                    ),
                   )}
                 </div>
               </label>

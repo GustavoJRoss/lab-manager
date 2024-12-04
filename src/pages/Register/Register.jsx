@@ -1,15 +1,44 @@
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
-import Header from "../../components/Header/Header";
-import "./Register.css";
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useAuth } from '../../context/AuthContext';
+import Header from '../../components/Header/Header';
+import './Register.css';
 
 const Register = () => {
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
   const navigate = useNavigate();
 
-  const handleCreateUser = async () => {};
+  const handleCreateUser = async () => {
+    const url = 'http://localhost:8080/users/create';
+    const userData = {
+      name: username,
+      user_type: 1, // Tipo fixo
+      password: password,
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Usuário criado com sucesso:', result);
+        alert('Usuário criado com sucesso!');
+      } else {
+        console.error('Erro ao criar usuário:', response.statusText);
+        alert('Erro ao criar usuário.');
+      }
+    } catch (error) {
+      console.error('Erro na requisição:', error);
+      alert('Erro na requisição.');
+    }
+  };
   return (
     <div>
       <Header />
@@ -47,10 +76,10 @@ const Register = () => {
               Register
             </button>
             <p className="RegisterFooter">
-              Já possui uma conta?{" "}
+              Já possui uma conta?{' '}
               <a
                 onClick={() => {
-                  navigate("/");
+                  navigate('/');
                 }}
               >
                 Clique aqui.
