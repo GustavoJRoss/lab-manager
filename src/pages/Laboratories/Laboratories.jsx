@@ -7,6 +7,27 @@ import CreateLab from '../../components/CreateLab/CreateLab';
 
 const Laboratorios = () => {
   // Dados fictícios
+  const [labs, setLabs] = useState({});
+
+  useEffect(() => {
+    const fetchLabs = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/api/v1/labs');
+        if (!response.ok) {
+          throw new Error(`Erro: ${response.status} - ${response.statusText}`);
+        }
+        const data = await response.json();
+        setLabs(data); // Supondo que a API retorne um array de labs
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLabs();
+  }, []);
+
   const laboratorios = [
     {
       Name: 'Lab 1',
@@ -131,13 +152,13 @@ const Laboratorios = () => {
               </tr>
             </thead>
             <tbody>
-              {laboratoriosFiltrados.map((lab, index) => (
+              {labs.map((lab, index) => (
                 <tr key={index} onClick={() => setLaboratorioSelecionado(lab)}>
-                  <td>{lab.Name}</td>
-                  <td>{lab.Local}</td>
-                  <td>{lab.Status}</td>
-                  <td>{lab.PcNumbers}</td>
-                  <td>{lab.Acessible ? 'Sim' : 'Não'}</td>
+                  <td>{lab.name}</td>
+                  <td>{lab.local}</td>
+                  <td>{lab.status}</td>
+                  <td>{lab.pcNumber}</td>
+                  <td>{lab.acessible ? 'Sim' : 'Não'}</td>
                 </tr>
               ))}
             </tbody>
