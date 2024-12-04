@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import "./LabCard.css";
+import React, { useState } from 'react';
+import './LabCard.css';
 
 const LabCard = ({ laboratorio, onClose }) => {
   const [expandirSoftwares, setExpandirSoftwares] = useState(false);
@@ -11,16 +11,16 @@ const LabCard = ({ laboratorio, onClose }) => {
       <div className="modalContent">
         <h2>Detalhes do Laboratório</h2>
         <p>
-          <strong>Nome:</strong> {laboratorio.nome}
+          <strong>Nome:</strong> {laboratorio.name}
         </p>
         <p>
-          <strong>Bloco:</strong> {laboratorio.bloco}
+          <strong>Bloco:</strong> {laboratorio.local}
         </p>
         <p>
           <strong>Status:</strong> {laboratorio.status}
         </p>
         <p>
-          <strong>Número de PCs:</strong> {laboratorio.numPcs}
+          <strong>Número de PCs:</strong> {laboratorio.pcNumbers}
         </p>
         <div className="softwaresSection">
           <p>
@@ -30,7 +30,7 @@ const LabCard = ({ laboratorio, onClose }) => {
             className="toggleButton"
             onClick={() => setExpandirSoftwares(!expandirSoftwares)}
           >
-            {expandirSoftwares ? "Recolher" : "Expandir"}
+            {expandirSoftwares ? 'Recolher' : 'Expandir'}
           </button>
           {expandirSoftwares && (
             <ul className="softwaresList">
