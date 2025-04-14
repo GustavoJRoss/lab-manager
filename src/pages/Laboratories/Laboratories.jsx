@@ -9,24 +9,24 @@ const Laboratorios = () => {
   // Dados fictícios
   const [labs, setLabs] = useState({});
 
-  useEffect(() => {
-    const fetchLabs = async () => {
-      try {
-        const response = await fetch('http://localhost:8080/api/v1/labs');
-        if (!response.ok) {
-          throw new Error(`Erro: ${response.status} - ${response.statusText}`);
-        }
-        const data = await response.json();
-        setLabs(data); // Supondo que a API retorne um array de labs
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+  const fetchLabs = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/api/v1/labs');
+      if (!response.ok) {
+        throw new Error(`Erro: ${response.status} - ${response.statusText}`);
       }
-    };
+      const data = await response.json();
+      setLabs(data); // Supondo que a API retorne um array de labs
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchLabs();
-  }, []);
+  }, [labs]);
 
   const laboratorios = [
     {
